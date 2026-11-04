@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Café Altura · Cafetería de especialidad</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#e8eee4; --surface:#f6f8f3; --ink:#1f2b26; --muted:#56655d; --line:#c3cfc2;
+  --accent:#3d2c5a; --accent-ink:#f6f1ff; --pop:#e9a15b;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#16201c; --surface:#1e2a25; --ink:#e7eee9; --muted:#9fb1a7; --line:#34453d;
+    --accent:#c9b6f0; --accent-ink:#1a1230; --pop:#f0b073;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#16201c; --surface:#1e2a25; --ink:#e7eee9; --muted:#9fb1a7; --line:#34453d;
+  --accent:#c9b6f0; --accent-ink:#1a1230; --pop:#f0b073;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Work Sans","Segoe UI",system-ui,sans-serif;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:9}
+header .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:12px;padding-bottom:12px;gap:16px;flex-wrap:wrap}
+.logo{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:1.25rem;text-decoration:none}
+nav{display:flex;gap:20px}
+nav a{text-decoration:none;font-weight:500}
+nav a:hover{text-decoration:underline}
+.hero{padding:72px 0 56px}
+.hero h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:clamp(3rem,11vw,7.5rem);line-height:.95;margin:0 0 24px;letter-spacing:-.02em}
+.hero h1 span{display:block;font-weight:400;font-style:italic;color:var(--accent)}
+.hero p{max-width:46ch;font-size:1.15rem;color:var(--muted);margin:0 0 28px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:13px 26px;border-radius:999px;font-weight:600;text-decoration:none}
+.btn:hover{filter:brightness(1.12)}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-family:Fraunces,Georgia,serif;font-size:2.1rem;margin:0 0 28px;line-height:1.15}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px 56px}
+.menu h3{font-family:Fraunces,Georgia,serif;font-size:1.3rem;margin:0 0 6px;color:var(--accent)}
+.item{display:flex;align-items:baseline;gap:8px;padding:10px 0;border-bottom:1px dotted var(--line)}
+.item .n{font-weight:600}
+.item .d{display:block;font-weight:400;color:var(--muted);font-size:.92rem}
+.item .p{margin-left:auto;font-weight:600;white-space:nowrap}
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:start}
+.about p{margin:0 0 14px;max-width:60ch}
+.dato{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pop);border-radius:6px;padding:20px 22px}
+.dato strong{font-family:Fraunces,Georgia,serif;font-size:1.25rem;display:block;margin-bottom:6px}
+table{width:100%;border-collapse:collapse}
+td{padding:9px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;font-weight:600}
+footer{padding:28px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+form{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;max-width:640px}
+label{display:block;font-weight:600;margin:0 0 6px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+input.invalido,select.invalido{border-color:#c0392b}
+.fila{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:16px}
+.campo{margin-bottom:16px}
+.fila .campo{margin:0}
+button.btn{border:0;font:inherit;font-weight:600;cursor:pointer}
+.err{color:#c0392b;min-height:1.4em;margin:12px 0 0;font-size:.92rem}
+#ok{display:none;max-width:640px;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--pop);border-radius:6px;padding:20px 22px}
+#ok.on{display:block}
+#ok strong{font-family:Fraunces,Georgia,serif;font-size:1.3rem;display:block;margin-bottom:8px}
+#ok button{margin-top:14px;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:8px 18px;font:inherit;font-weight:600;cursor:pointer}
+@media (max-width:560px){.hero{padding:48px 0 40px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#inicio">Café Altura</a>
+    <nav aria-label="Principal">
+      <a href="#menu">Menú</a><a href="#nosotros">Nosotros</a><a href="#visitanos">Visítanos</a><a href="#reservar">Reservar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="wrap hero">
+    <h1>Café<span>sin prisa.</span></h1>
+    <p>Granos de altura, tostados en pequeños lotes y preparados al momento. Pasa por una taza y quédate el tiempo que quieras.</p>
+    <a class="btn" href="#menu">Ver el menú</a>
+  </div>
+
+  <section id="menu">
+    <div class="wrap">
+      <h2>Menú</h2>
+      <div class="menu">
+        <div>
+          <h3>Café</h3>
+          <div class="item"><div><span class="n">Espresso</span><span class="d">Doble, intenso y con crema</span></div><span class="p">$1.75</span></div>
+          <div class="item"><div><span class="n">Americano</span><span class="d">Espresso con agua caliente</span></div><span class="p">$2.00</span></div>
+          <div class="item"><div><span class="n">Capuchino</span><span class="d">Espresso, leche vaporizada y espuma</span></div><span class="p">$2.75</span></div>
+          <div class="item"><div><span class="n">Latte de vainilla</span><span class="d">Suave y cremoso, con jarabe casero</span></div><span class="p">$3.25</span></div>
+          <div class="item"><div><span class="n">Café frío</span><span class="d">Infusión en frío por 18 horas</span></div><span class="p">$3.00</span></div>
+        </div>
+        <div>
+          <h3>Para acompañar</h3>
+          <div class="item"><div><span class="n">Croissant de mantequilla</span><span class="d">Horneado cada mañana</span></div><span class="p">$2.25</span></div>
+          <div class="item"><div><span class="n">Pan dulce de la casa</span><span class="d">Receta tradicional</span></div><span class="p">$1.25</span></div>
+          <div class="item"><div><span class="n">Sándwich de pollo y aguacate</span><span class="d">Pan de masa madre</span></div><span class="p">$4.50</span></div>
+          <div class="item"><div><span class="n">Tarta de chocolate</span><span class="d">Porción individual</span></div><span class="p">$3.50</span></div>
+          <div class="item"><div><span class="n">Bolsa de café en grano</span><span class="d">250 g, tueste medio</span></div><span class="p">$8.50</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros">
+    <div class="wrap about">
+      <div>
+        <h2>Nuestra historia</h2>
+        <p>Café Altura nació de una idea sencilla: servir un buen café a un precio justo y en un lugar donde dé gusto quedarse.</p>
+        <p>Trabajamos directamente con pequeños productores, tostamos cada semana y molemos justo antes de preparar tu bebida. Así el sabor llega completo a tu taza.</p>
+      </div>
+      <div class="dato">
+        <strong>Tráete tu taza</strong>
+        Si vienes con tu propia taza o termo, te descontamos $0.25 en cualquier bebida.
+      </div>
+    </div>
+  </section>
+
+  <section id="visitanos">
+    <div class="wrap about">
+      <div>
+        <h2>Visítanos</h2>
+        <table>
+          <tr><td>Lunes a viernes</td><td>7:00 a. m. – 8:00 p. m.</td></tr>
+          <tr><td>Sábado</td><td>8:00 a. m. – 9:00 p. m.</td></tr>
+          <tr><td>Domingo</td><td>9:00 a. m. – 5:00 p. m.</td></tr>
+        </table>
+      </div>
+      <div class="dato">
+        <strong>Reservas y pedidos</strong>
+        Escríbenos por WhatsApp o llama al 0000-0000. Para grupos de más de seis personas, reserva con un día de anticipación.
+      </div>
+    </div>
+  </section>
+
+  <section id="reservar">
+    <div class="wrap">
+      <h2>Reserva tu mesa</h2>
+      <form id="reserva" novalidate>
+        <div class="fila">
+          <div class="campo"><label for="nombre">Nombre</label><input id="nombre" type="text" autocomplete="name"></div>
+          <div class="campo"><label for="tel">Teléfono</label><input id="tel" type="tel" inputmode="tel" autocomplete="tel"></div>
+        </div>
+        <div class="fila">
+          <div class="campo"><label for="fecha">Fecha</label><input id="fecha" type="date"></div>
+          <div class="campo"><label for="hora">Hora</label><input id="hora" type="time"></div>
+          <div class="campo"><label for="personas">Personas</label><input id="personas" type="number" min="1" max="6" value="2" inputmode="numeric"></div>
+        </div>
+        <div class="campo">
+          <label for="bebida">Bebida de bienvenida</label>
+          <select id="bebida">
+            <option value="">Sin preferencia</option>
+            <option>Espresso</option><option>Americano</option><option>Capuchino</option><option>Latte de vainilla</option><option>Café frío</option>
+          </select>
+        </div>
+        <div class="campo"><label for="notas">Comentarios (opcional)</label><textarea id="notas" rows="3"></textarea></div>
+        <button class="btn" type="submit">Reservar</button>
+        <p class="err" id="err" role="alert"></p>
+      </form>
+      <div id="ok" role="status" tabindex="-1">
+        <strong id="ok-t"></strong>
+        <span id="ok-d"></span>
+        <br><button type="button" id="otra">Hacer otra reserva</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Café Altura. Hecho con café y paciencia.</div>
+</footer>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var f=$('reserva'), ok=$('ok'), err=$('err');
+  var hoy=new Date(); hoy.setMinutes(hoy.getMinutes()-hoy.getTimezoneOffset());
+  var hoyStr=hoy.toISOString().slice(0,10);
+  $('fecha').min=hoyStr;
+
+  function horarioDe(fecha){
+    var d=new Date(fecha+'T12:00:00').getDay(); // 0 dom, 6 sáb
+    if(d===0) return [9*60,17*60];
+    if(d===6) return [8*60,21*60];
+    return [7*60,20*60];
+  }
+  function marcar(id){var e=$(id); e.classList.add('invalido'); e.focus();}
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); err.textContent='';
+    ['nombre','tel','fecha','hora','personas'].forEach(function(i){$(i).classList.remove('invalido')});
+
+    var nombre=$('nombre').value.trim(), tel=$('tel').value.trim();
+    var fecha=$('fecha').value, hora=$('hora').value, pers=parseInt($('personas').value,10);
+
+    if(!nombre){err.textContent='Escribe tu nombre.';return marcar('nombre');}
+    if(!/^[0-9+\-\s()]{8,15}$/.test(tel)){err.textContent='Escribe un teléfono válido (8 a 15 dígitos).';return marcar('tel');}
+    if(!fecha||fecha<hoyStr){err.textContent='Elige una fecha de hoy en adelante.';return marcar('fecha');}
+    if(!hora){err.textContent='Elige la hora.';return marcar('hora');}
+    var p=hora.split(':'), min=parseInt(p[0],10)*60+parseInt(p[1],10), h=horarioDe(fecha);
+    if(min<h[0]||min>h[1]-30){
+      function t(m){var hh=Math.floor(m/60),mm=m%60,s=hh>=12?'p. m.':'a. m.';hh=hh%12||12;return hh+':'+(mm<10?'0':'')+mm+' '+s}
+      err.textContent='Ese día atendemos de '+t(h[0])+' a '+t(h[1])+'. Reserva hasta 30 minutos antes del cierre.';
+      return marcar('hora');
+    }
+    if(fecha===hoyStr){
+      var ahora=new Date(); if(min<=ahora.getHours()*60+ahora.getMinutes()){err.textContent='Esa hora ya pasó. Elige una más tarde.';return marcar('hora');}
+    }
+    if(isNaN(pers)||pers<1||pers>6){err.textContent='Para grupos de más de 6 personas, llámanos con un día de anticipación.';return marcar('personas');}
+
+    var fl=new Date(fecha+'T12:00:00').toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long'});
+    var bebida=$('bebida').value;
+    $('ok-t').textContent='¡Listo, '+nombre.split(' ')[0]+'! Tu mesa está reservada.';
+    $('ok-d').textContent=fl+' a las '+hora+' para '+pers+(pers===1?' persona':' personas')+'.'+(bebida?' Te esperamos con un '+bebida.toLowerCase()+'.':'')+' Te contactaremos al '+tel+' si necesitamos confirmar algo.';
+    f.style.display='none'; ok.classList.add('on'); ok.focus();
+  });
+
+  $('otra').addEventListener('click',function(){
+    f.reset(); $('personas').value=2; f.style.display=''; ok.classList.remove('on'); $('nombre').focus();
+  });
+})();
+</script>
+</body>
+</html>
